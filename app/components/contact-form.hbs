@@ -1,0 +1,22 @@
+<div class="form-container">
+  <h1>{{@title}}</h1>
+  <form action="#">
+    {{#each this.inputFormats as |format|}}
+      <CustomInput
+        @format={{format}}
+        @value={{get @contact format.key}}
+        @error={{get this.errors format.keyForError}}
+      />
+    {{/each}}
+    {{#if this.errors.noChange}}
+      <small class="error">{{this.errors.noChange}}</small>
+      <br />
+    {{/if}}
+    <button
+      class="button"
+      type="submit"
+      {{action "submit"}}
+    >{{@submitLabel}}</button>
+  </form>
+  <button class="button" type="button" {{action "cancel"}}>Cancel</button>
+</div>

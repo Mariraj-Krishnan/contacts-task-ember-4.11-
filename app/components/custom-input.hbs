@@ -1,0 +1,9 @@
+<div class="custom-input">
+  <label>{{@format.label}}:
+    <br />
+    <Input @type={{@format.type}} @value={{@value}} />
+  </label>
+  {{#if @error}}
+    <small class="error">{{@error}}</small>
+  {{/if}}
+</div>

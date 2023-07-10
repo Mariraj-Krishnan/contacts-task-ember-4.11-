@@ -1,0 +1,9 @@
+{{page-title "CreateContact"}}
+<ContactForm
+  @title="Create contact"
+  @submitLabel="Create"
+  @contact={{this.model}}
+  @onSubmit={{this.create}}
+  @onCancel={{this.cancel}}
+/>
+{{outlet}}

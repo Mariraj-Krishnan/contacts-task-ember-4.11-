@@ -1,0 +1,17 @@
+{{page-title "Contact"}}
+<h1>{{this.model.name}}</h1>
+<div>
+  <p>Phone: {{this.model.phone}}</p>
+  <p>Email: {{this.model.email}}</p>
+  <p>Address: {{this.model.address}}</p>
+  <LinkTo
+    @route="edit-contact"
+    @model={{this.model.id}}
+    class="button"
+  >Edit</LinkTo>
+  <button
+    class="button"
+    type="button"
+    {{on "click" (fn this.delete this.model.id)}}
+  >Delete</button>
+</div>
