@@ -1,7 +1,7 @@
-import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-export default class CreateContactController extends Controller {
+import ManipulateContactController from './manipulate-contact';
+export default class CreateContactController extends ManipulateContactController {
   @service store;
   @service router;
 
@@ -11,10 +11,5 @@ export default class CreateContactController extends Controller {
       .createRecord('contact', this.model)
       .save()
       .then(() => this.replaceRoute('contacts'));
-  }
-
-  @action
-  cancel() {
-    this.router.transitionTo('contacts');
   }
 }
