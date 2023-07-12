@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import _ from 'lodash';
-import { isEqual } from '@ember/utils';
 export default class ContactFormComponent extends Component {
   @tracked
   errors = {};
@@ -42,28 +41,29 @@ export default class ContactFormComponent extends Component {
       keyForError: 'addressError',
     },
   ];
-  //   constructor() {
-  //     super(...arguments);
-  //     this.errors = {};
-  //   }
 
-  validate() {
-    return this.inputFormats.reduce(
-      (valid, { key, pattern, label, keyForError }) => {
-        if (!this.args.contact[key]) {
-          this.errors[keyForError] = `${label} is required`;
-          this.errors = this.errors;
-          return false;
-        }
-        if (!this.args.contact[key].match(pattern)) {
-          this.errors[keyForError] = `Invalid ${label.toLowerCase()}`;
-          this.errors = this.errors;
-          return false;
-        }
-        return valid && true;
-      },
-      true
-    );
+  validateAll() {
+    this.errors = {};
+    return this.inputFormats.reduce((valid, format) => {
+      return this.validateField(format, this.args.contact[format.key]) && valid;
+    }, true);
+  }
+
+  @action
+  validateField({ pattern, label, keyForError }, value) {
+    let valid;
+    if (!value) {
+      this.errors[keyForError] = `${label} is required`;
+      valid = false;
+    } else if (!value.match(pattern)) {
+      this.errors[keyForError] = `Invalid ${label.toLowerCase()}`;
+      valid = false;
+    } else {
+      this.errors[keyForError] = '';
+      valid = true;
+    }
+    this.errors = this.errors;
+    return valid;
   }
 
   hasChange() {
@@ -77,7 +77,7 @@ export default class ContactFormComponent extends Component {
 
   @action
   submit() {
-    if (this.validate() && this.hasChange()) {
+    if (this.validateAll() && this.hasChange()) {
       this.args.onSubmit();
     }
   }

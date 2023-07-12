@@ -6,6 +6,7 @@
         @format={{format}}
         @value={{get @contact format.key}}
         @error={{get this.errors format.keyForError}}
+        @onInput={{fn this.validateField format}}
       />
     {{/each}}
     {{#if this.errors.noChange}}
