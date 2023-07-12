@@ -43,7 +43,6 @@ export default class ContactFormComponent extends Component {
   ];
 
   validateAll() {
-    this.errors = {};
     return this.inputFormats.reduce((valid, format) => {
       return this.validateField(format, this.args.contact[format.key]) && valid;
     }, true);
@@ -51,6 +50,7 @@ export default class ContactFormComponent extends Component {
 
   @action
   validateField({ pattern, label, keyForError }, value) {
+    this.errors.noChange="";
     let valid;
     if (!value) {
       this.errors[keyForError] = `${label} is required`;
