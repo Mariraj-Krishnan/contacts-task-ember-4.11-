@@ -11,6 +11,6 @@ Router.map(function () {
     this.route('contact', { path: '/:contact_id' });
   });
   this.route('not-found', { path: '*' });
-  this.route('edit-contact', { path: '/:contact_id' });
+  this.route('edit-contact', { path: 'edit-contact/:contact_id' });
   this.route('create-contact');
 });
